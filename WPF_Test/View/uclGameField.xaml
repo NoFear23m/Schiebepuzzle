@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="uclGameField" x:Name="uclGameField"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Schiebepuzzle"
+             xmlns:viewModel="clr-namespace:Schiebepuzzle.ViewModel"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type viewModel:GamePlay}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+    <Viewbox Margin="40" Grid.Column="1">
+        <Border BorderBrush="Black" BorderThickness="5" Grid.Row="1">
+            <Border.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Padding" Value="20,10"/>
+                    <Setter Property="FontSize" Value="30"/>
+                    <Setter Property="FontWeight" Value="UltraBold"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="FontFamily" Value="Courier New"/>
+                </Style>
+            </Border.Resources>
+            <ItemsControl ItemsSource="{Binding AllButtons}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="{Binding ElementName=uclGameField, Path=FieldSize}" Rows="{Binding ElementName=uclGameField, Path=FieldSize}"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </Viewbox>
+        <Viewbox Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="150" Height="150">
+            <Viewbox.Effect>
+                <DropShadowEffect/>
+            </Viewbox.Effect>
+            <Image Source="{Binding CurrentImagePath,Mode=OneWay}" Width="150" Height="150"/>
+        </Viewbox>
+
+        <local:uclGameStatus DataContext="{Binding Status}" Grid.Column="0" Opacity="0.7"
+                             HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="200" Height="150">
+            <local:uclGameStatus.Effect>
+                <DropShadowEffect/>
+            </local:uclGameStatus.Effect>
+        </local:uclGameStatus>
+    </Grid>
+</UserControl>
