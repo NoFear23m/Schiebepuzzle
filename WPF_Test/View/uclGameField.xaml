@@ -43,6 +43,7 @@
             <Viewbox.Effect>
                 <DropShadowEffect/>
             </Viewbox.Effect>
+            
             <Image Source="{Binding CurrentImagePath,Mode=OneWay}" Width="150" Height="150"/>
         </Viewbox>
 

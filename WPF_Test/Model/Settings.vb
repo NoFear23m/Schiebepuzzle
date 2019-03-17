@@ -11,7 +11,7 @@
         Public Property MixStonesRelativeSoundFilePath As String = "\sounds\Reverse gleam high frequency.wav"
         Public Property MoveStoneRelativeSoundFilePath As String = "\sounds\Fast zing.wav"
         Public Property PlaySounds As Boolean = True
-        Public Property LastSelectedImage As String = ""
+        Public Property LastSelectedImage As String = "coffee.jpg"
 
     End Class
 End Namespace

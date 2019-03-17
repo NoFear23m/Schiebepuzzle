@@ -64,7 +64,6 @@ Namespace ViewModel
 
             For i As Integer = 0 To (GameSettings.Rows * GameSettings.Columns) - 2
                 If fieldType = GamePlaySettingsVm.PlayFieldType.ImagedPlayField Then
-                    If String.IsNullOrEmpty(GameSettings.SelectedImage) Then GameSettings.SelectedImage = GameSettings.AviableImages.FirstOrDefault
                     If Not IO.File.Exists(Environment.CurrentDirectory & "\images\" & GameSettings.SelectedImage) Then
                         ServiceContainer.GetService(Of IMessageboxService).Show("Das Bild für das Spielsfeld wurde nicht gefunden. Lade Spieltyp 'Nummern'", "Bild nicht gefunden")
                         fieldType = GamePlaySettingsVm.PlayFieldType.NumberedPlayField
@@ -78,6 +77,7 @@ Namespace ViewModel
                         pieces = ImageHelper.ImageCutter(GameSettings.FieldSize, picPath)
                         AllButtons.Add(New ImagePlayButton With {.Image = ImageHelper.ConvertImageToBitMapImage(pieces(i)), .Number = i + 1})
                     Case GamePlaySettingsVm.PlayFieldType.NumberedPlayField
+                        CurrentImagePath = Nothing
                         AllButtons.Add(New NumberedPlayButton With {.Number = i + 1})
                 End Select
             Next
