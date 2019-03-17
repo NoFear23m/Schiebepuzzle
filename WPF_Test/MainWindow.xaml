@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         GlowBrush="{DynamicResource AccentColorBrush}"
         Background="{StaticResource WindowBackgroundBrush}"
-        Title="WPF-Spiel" Height="600" Width="1200" MinWidth="600" MinHeight="500">
+        Title="WPF-Spiel" Height="600" Width="1200" MinWidth="600" MinHeight="500" Icon="Puzzle.ico">
     <Window.DataContext>
         <viewModel:MainWorkspace/>
     </Window.DataContext>

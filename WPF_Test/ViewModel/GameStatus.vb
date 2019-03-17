@@ -10,10 +10,11 @@ Namespace ViewModel
         Public Sub New()
             RunningTime = New TimeSpan(0)
             If Not IsInDesignMode Then
-                _runningTimer = New Timer(50)
+                _runningTimer = New Timer(1000)
                 AddHandler _runningTimer.Elapsed, AddressOf RunningTimer_Elapsed
                 _runningTimer.Start()
             Else
+                'DesignTime
                 MoveCount = 5
                 ValidPositionedStones = 3
                 WrongPositionedStones = 8
