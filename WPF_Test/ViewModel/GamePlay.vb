@@ -62,25 +62,27 @@ Namespace ViewModel
         Friend Sub CreateField(fieldType As GamePlaySettingsVm.PlayFieldType)
             AllButtons.Clear()
 
-            For i As Integer = 0 To (GameSettings.Rows * GameSettings.Columns) - 2
-                If fieldType = GamePlaySettingsVm.PlayFieldType.ImagedPlayField Then
-                    If Not IO.File.Exists(Environment.CurrentDirectory & "\images\" & GameSettings.SelectedImage) Then
-                        ServiceContainer.GetService(Of IMessageboxService).Show("Das Bild für das Spielsfeld wurde nicht gefunden. Lade Spieltyp 'Nummern'", "Bild nicht gefunden")
-                        fieldType = GamePlaySettingsVm.PlayFieldType.NumberedPlayField
-                    End If
+            If fieldType = GamePlaySettingsVm.PlayFieldType.ImagedPlayField Then
+                If Not IO.File.Exists(Environment.CurrentDirectory & "\images\" & GameSettings.SelectedImage) Then
+                    ServiceContainer.GetService(Of IMessageboxService).Show("Das Bild für das Spielsfeld wurde nicht gefunden. Lade Spieltyp 'Nummern'", "Bild nicht gefunden")
+                    fieldType = GamePlaySettingsVm.PlayFieldType.NumberedPlayField
                 End If
-                Select Case fieldType
-                    Case GamePlaySettingsVm.PlayFieldType.ImagedPlayField
-                        Dim pieces As List(Of System.Drawing.Image)
-                        Dim picPath = Environment.CurrentDirectory & "\images\" & GameSettings.SelectedImage
-                        CurrentImagePath = picPath
-                        pieces = ImageHelper.ImageCutter(GameSettings.FieldSize, picPath)
+            End If
+            Select Case fieldType
+                Case GamePlaySettingsVm.PlayFieldType.ImagedPlayField
+                    Dim pieces As List(Of System.Drawing.Image)
+                    Dim picPath = Environment.CurrentDirectory & "\images\" & GameSettings.SelectedImage
+                    CurrentImagePath = picPath
+                    pieces = ImageHelper.ImageCutter(GameSettings.FieldSize, picPath)
+                    For i As Integer = 0 To (GameSettings.Rows * GameSettings.Columns) - 2
                         AllButtons.Add(New ImagePlayButton With {.Image = ImageHelper.ConvertImageToBitMapImage(pieces(i)), .Number = i + 1})
-                    Case GamePlaySettingsVm.PlayFieldType.NumberedPlayField
-                        CurrentImagePath = Nothing
+                    Next
+                Case GamePlaySettingsVm.PlayFieldType.NumberedPlayField
+                    CurrentImagePath = Nothing
+                    For i As Integer = 0 To (GameSettings.Rows * GameSettings.Columns) - 2
                         AllButtons.Add(New NumberedPlayButton With {.Number = i + 1})
-                End Select
-            Next
+                    Next
+            End Select
             AllButtons.Add(New Placeholder())
 
         End Sub
@@ -194,14 +196,16 @@ Namespace ViewModel
             CreateField(GameSettings.SelectedFieldType)
             If GameSettings.PlaySounds Then _soundCollector.PlaySound(SoundType.MixStones)
             Dim r As New Random()
+
             For i As Integer = 0 To (GameSettings.SelectedLevel + 3) * (5 * (GameSettings.SelectedLevel + 1))
                 Dim wasMoved As Boolean = False
+                Dim lastMovedIndex As Integer = -1
                 Do Until wasMoved
-                    Dim currButtonIndex = r.Next(AllButtons.Where(Function(x) x.StoneType = PlayStoneType.NormalButton).Count - 1)
+                    Dim currButtonIndex = r.Next((GameSettings.Columns * GameSettings.Rows) - 1)
                     Dim placeholderindex = AllButtons.IndexOf(AllButtons.Where(Function(x) x.StoneType = PlayStoneType.Placeholder).Single)
-                    If IsStoneNeerPlaceholder(currButtonIndex, placeholderindex) Then
+                    If currButtonIndex <> lastMovedIndex AndAlso IsStoneNeerPlaceholder(currButtonIndex, placeholderindex) Then
                         DoMoveButton(currButtonIndex, placeholderindex, False)
-                        wasMoved = True
+                        wasMoved = True : lastMovedIndex = currButtonIndex
                     End If
                 Loop
             Next
