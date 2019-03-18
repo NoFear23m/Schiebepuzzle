@@ -29,6 +29,8 @@ Namespace ViewModel
 
                 AllButtons = New ObservableCollection(Of PlayStoneBase)
                 MixStonesCommand.Execute(Nothing)
+                'Status = New GameStatus() : Status.ResetGameTimer()
+                'Status.RefreshStatus(AllButtons.ToList)
             End If
         End Sub
 
@@ -82,6 +84,7 @@ Namespace ViewModel
                 End Select
             Next
             AllButtons.Add(New Placeholder())
+
         End Sub
 
 
@@ -132,7 +135,9 @@ Namespace ViewModel
 
             'Liegt Stein unmittelbar neben dem Placeholder?
             If IsStoneNeerPlaceholder(currIndex, emptyIndex) Then
+                If Status.GameTimerStatus <> TimerStatus.Running Then Status.StartGameTimer()
                 DoMoveButton(currIndex, emptyIndex, GameSettings.PlaySounds)
+                Status.RefreshStatus(AllButtons.ToList)
             End If
         End Sub
 
@@ -164,10 +169,11 @@ Namespace ViewModel
                     Exit For
                 End If
             Next
-            Status?.RefreshStatus(AllButtons.ToList)
+
             If hasWin Then
-                _soundCollector.PlaySound(SoundType.GameWin)
+                If withSound Then _soundCollector.PlaySound(SoundType.GameWin)
                 ServiceContainer.GetService(Of IMessageboxService).Show("Gratulation, du hast gewonnen!!!", "Gewonnen!", EnuMessageBoxButton.Ok, EnuMessageBoxImage.Information)
+                Status.PauseGameTimer()
             End If
         End Sub
 

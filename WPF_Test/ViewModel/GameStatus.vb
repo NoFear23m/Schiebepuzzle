@@ -8,11 +8,11 @@ Namespace ViewModel
         Private ReadOnly _runningTimer As Timer
 
         Public Sub New()
-            RunningTime = New TimeSpan(0)
+
             If Not IsInDesignMode Then
                 _runningTimer = New Timer(1000)
                 AddHandler _runningTimer.Elapsed, AddressOf RunningTimer_Elapsed
-                _runningTimer.Start()
+                ResetGameTimer()
             Else
                 'DesignTime
                 MoveCount = 5
@@ -25,6 +25,32 @@ Namespace ViewModel
         Private Sub RunningTimer_Elapsed(sender As Object, e As ElapsedEventArgs)
             RunningTime = RunningTime.Add(New TimeSpan(0, 0, 1))
         End Sub
+
+        ''' <summary>
+        ''' Startet den Gametimer und beginnt zu zählen
+        ''' </summary>
+        Friend Sub StartGameTimer()
+            _runningTimer.Start()
+            _gameTimerStatus = TimerStatus.Running
+        End Sub
+
+        Friend Sub PauseGameTimer()
+            _runningTimer.Stop()
+            _gameTimerStatus = TimerStatus.Stopped
+        End Sub
+
+        Friend Sub ResetGameTimer()
+            _runningTimer.Stop()
+            RunningTime = New TimeSpan(0)
+            _gameTimerStatus = TimerStatus.Resetted
+        End Sub
+
+        Private _gameTimerStatus As TimerStatus
+        Friend ReadOnly Property GameTimerStatus As TimerStatus
+            Get
+                Return _gameTimerStatus
+            End Get
+        End Property
 
 
         Friend Sub RefreshStatus(buttons As List(Of PlayStoneBase))
@@ -103,4 +129,11 @@ Namespace ViewModel
         End Sub
 
     End Class
+
+    Public Enum TimerStatus
+        Stopped = 0
+        Running = 1
+        Resetted = 99
+    End Enum
+
 End Namespace
