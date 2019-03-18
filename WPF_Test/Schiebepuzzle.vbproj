@@ -96,6 +96,7 @@
     <Compile Include="Helper\Serializer\XMLSerializer.vb" />
     <Compile Include="Helper\SettingsHelper.vb" />
     <Compile Include="Model\Settings.vb" />
+    <Compile Include="Services\DialogWindowService.vb" />
     <Compile Include="Services\MessageboxService.vb" />
     <Compile Include="Services\ServiceInjector.vb" />
     <Compile Include="Services\WaitingCursorService.vb" />
@@ -105,6 +106,7 @@
     <Compile Include="Model\SoundCollector.vb" />
     <Compile Include="ViewModel\GamePlaySettingsVm.vb" />
     <Compile Include="ViewModel\GameStatus.vb" />
+    <Compile Include="ViewModel\Infrastructure\IDialogWindowService.vb" />
     <Compile Include="ViewModel\Infrastructure\IMessageboxService.vb" />
     <Compile Include="ViewModel\Infrastructure\IWaitingCursorService.vb" />
     <Compile Include="ViewModel\Infrastructure\ServiceContainer.vb" />
@@ -116,7 +118,11 @@
     <Compile Include="ViewModel\Stones\PlayStoneBase.vb" />
     <Compile Include="ViewModel\RelayCommand.vb" />
     <Compile Include="ViewModel\ViewModelBase.vb" />
+    <Compile Include="ViewModel\WinBoxVm.vb" />
     <Compile Include="View\Converter\ImageNameToFullPathConverter.vb" />
+    <Compile Include="View\SpsWindow.xaml.vb">
+      <DependentUpon>SpsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\uclFooter.xaml.vb">
       <DependentUpon>uclFooter.xaml</DependentUpon>
     </Compile>
@@ -132,6 +138,9 @@
     <Compile Include="View\uclTopMenu.xaml.vb">
       <DependentUpon>uclTopMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\uclWinBox.xaml.vb">
+      <DependentUpon>uclWinBox.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,6 +153,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\SpsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\uclFooter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\uclTopMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\uclWinBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,6 +234,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="images\app\trophy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\coffee.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

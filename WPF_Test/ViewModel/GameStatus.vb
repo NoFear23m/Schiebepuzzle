@@ -1,5 +1,6 @@
 ﻿Imports System.Timers
 Imports Schiebepuzzle.Model.Stones
+Imports Schiebepuzzle.ViewModel.Infrastructure
 
 Namespace ViewModel
     Public Class GameStatus
@@ -125,9 +126,11 @@ Namespace ViewModel
 
         Friend ReadOnly Property IsGameWon As Boolean = False
 
-        Public Sub GameHasWin()
+        Public Sub GameHasWin(playSound As Boolean, sc As Model.SoundCollector)
             _IsGameWon = True
+            If playSound Then sc.PlaySound(Model.SoundType.GameWin)
             PauseGameTimer()
+            ServiceContainer.GetService(Of IDialogWindowService).ShowModalDialog("winningWindow", New WinBoxVm(MoveCount, _runningTime), Me, True, False)
         End Sub
 
         Public Overrides Sub Dispose(disposing As Boolean)

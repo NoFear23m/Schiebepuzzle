@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="uclWinBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Schiebepuzzle"
+             xmlns:viewmodel="clr-namespace:Schiebepuzzle.ViewModel"
+             mc:Ignorable="d" Width="400" Height="400"
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type viewmodel:WinBoxVm}}">
+    <Button IsCancel="True">
+    <Grid>
+        <Image Source="..\images\app\trophy.png"/>
+        <Label Content="Gratulation, gewonnen!!" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="25" Foreground="Black" FontWeight="Bold"/>
+            <TextBlock Foreground="Black" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
+                <Run Text="Du hast in"/>
+                <Run Text="{Binding Moves,FallbackValue=XX}"/>
+                <Run Text="Zügen innerhalb von"/>
+                <Run Text="{Binding Time}"/>
+                <Run Text="gewonnen."/>
+            </TextBlock>
+    </Grid>
+    </Button>
+</UserControl>

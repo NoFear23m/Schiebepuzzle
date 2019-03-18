@@ -11,7 +11,7 @@
         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type viewModel:MainWorkspace}}"
         mc:Ignorable="d"
         GlowBrush="{DynamicResource AccentColorBrush}"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{StaticResource WindowBackgroundBrush}" WindowStartupLocation="CenterScreen"
         Title="WPF-Spiel" Height="600" Width="1200" MinWidth="600" MinHeight="500" Icon="Puzzle.ico">
     <Window.DataContext>
         <viewModel:MainWorkspace/>
@@ -41,6 +41,7 @@
         <DataTemplate DataType="{x:Type stones:Placeholder}">
                 <Border Background="{StaticResource PlaceholderBackgroundBrush}" BorderThickness="0.5" BorderBrush="{StaticResource BorderBrush}"/>
             </DataTemplate>
+       
         </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

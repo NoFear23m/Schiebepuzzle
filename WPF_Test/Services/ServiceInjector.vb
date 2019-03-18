@@ -10,6 +10,7 @@ Namespace Services
         Public Shared Sub InjectServices()
             ServiceContainer.Instance.AddService(Of IMessageboxService)(New MessageboxService())
             ServiceContainer.Instance.AddService(Of IWaitingCursorService)(New WaitingCursorService())
+            ServiceContainer.Instance.AddService(Of IDialogWindowService)(New DialogWindowService())
         End Sub
     End Class
 End Namespace

@@ -138,7 +138,7 @@ Namespace ViewModel
             If IsStoneNeerPlaceholder(currIndex, emptyIndex) Then
                 If Status.GameTimerStatus <> TimerStatus.Running Then Status.StartGameTimer()
                 DoMoveButton(currIndex, emptyIndex, GameSettings.PlaySounds)
-                Status.RefreshStatus(AllButtons.ToList)
+                'Status.RefreshStatus(AllButtons.ToList)
             End If
         End Sub
 
@@ -170,11 +170,10 @@ Namespace ViewModel
                     Exit For
                 End If
             Next
-
+            Status?.RefreshStatus(AllButtons.ToList)
             If hasWin Then
-                Status.GameHasWin()
-                If withSound Then _soundCollector.PlaySound(SoundType.GameWin)
-                ServiceContainer.GetService(Of IMessageboxService).Show("Gratulation, du hast gewonnen!!!", "Gewonnen!", EnuMessageBoxButton.Ok, EnuMessageBoxImage.Information)
+
+                Status.GameHasWin(withSound, _soundCollector)
             End If
         End Sub
 
