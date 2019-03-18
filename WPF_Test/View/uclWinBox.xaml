@@ -11,7 +11,7 @@
     <Grid>
         <Image Source="..\images\app\trophy.png"/>
         <Label Content="Gratulation, gewonnen!!" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="25" Foreground="Black" FontWeight="Bold"/>
-            <TextBlock Foreground="Black" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
+            <TextBlock Foreground="Black" TextWrapping="Wrap" FontSize="20" HorizontalAlignment="Center" TextAlignment="Center">
                 <Run Text="Du hast in"/>
                 <Run Text="{Binding Moves,FallbackValue=XX}"/>
                 <Run Text="Zügen innerhalb von"/>

@@ -100,6 +100,7 @@
     <Compile Include="Services\MessageboxService.vb" />
     <Compile Include="Services\ServiceInjector.vb" />
     <Compile Include="Services\WaitingCursorService.vb" />
+    <Compile Include="ViewModel\AboutVm.vb" />
     <Compile Include="ViewModel\FooterVm.vb" />
     <Compile Include="ViewModel\GamePlay.vb" />
     <Compile Include="Model\Sound.vb" />
@@ -122,6 +123,9 @@
     <Compile Include="View\Converter\ImageNameToFullPathConverter.vb" />
     <Compile Include="View\SpsWindow.xaml.vb">
       <DependentUpon>SpsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\uclAbout.xaml.vb">
+      <DependentUpon>uclAbout.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\uclFooter.xaml.vb">
       <DependentUpon>uclFooter.xaml</DependentUpon>
@@ -154,6 +158,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\SpsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\uclAbout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

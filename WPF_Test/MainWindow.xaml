@@ -19,7 +19,13 @@
     <Window.Resources>
         <SolidColorBrush x:Key="BorderBrush">Black</SolidColorBrush>
         <SolidColorBrush x:Key="PlaceholderBackgroundBrush">White</SolidColorBrush>
-
+        <Style TargetType="TextBlock" BasedOn="{StaticResource MetroTextBlock}">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style TargetType="ComboBox"  BasedOn="{StaticResource MetroComboBox}">
+            <Setter Property="MinHeight" Value="40"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        </Style>
         <DataTemplate DataType="{x:Type stones:NumberedPlayButton}">
                 <Button Content="{Binding Number}" Command="{Binding DataContext.GameZone.MoveButtonCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                         CommandParameter="{Binding}"/>

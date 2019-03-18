@@ -15,11 +15,19 @@
         <GroupBox Header="Spielfeld mischen" DockPanel.Dock="Left">
             <Button Content="Neu mischen" FontSize="20" Command="{Binding GameZone.MixStonesCommand}" VerticalAlignment="Center"/>
         </GroupBox>
-
-                <GroupBox Header="Sound" Width="130" DockPanel.Dock="Right">
+        <GroupBox Header="About" Width="100" DockPanel.Dock="Right">
+            <Button Command="{Binding GamePlaySettings.ShowInfoDialogCommand}">
+                <Viewbox Height="30">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" Fill="{StaticResource AccentColorBrush}" />
+                    </Canvas>
+                </Viewbox>
+            </Button>
+        </GroupBox>
+        <GroupBox Header="Sound" Width="130" DockPanel.Dock="Right">
             <mah:ToggleSwitch VerticalAlignment="Center" OnLabel="EIN" OffLabel="AUS" IsChecked="{Binding GamePlaySettings.PlaySounds}"/>
         </GroupBox>
-        
+
         <GroupBox Header="Spielfeldbild" DockPanel.Dock="Right">
             <GroupBox.Style>
                 <Style TargetType="GroupBox" BasedOn="{StaticResource {x:Type GroupBox}}">

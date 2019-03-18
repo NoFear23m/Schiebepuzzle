@@ -1,5 +1,5 @@
 ﻿
-Namespace Model
+Namespace ViewModel
 
     ''' <summary>
     ''' Diese Klasse Implementiert das ICommand Interface, so muss man nicht in jeder Klasse eines ViewModel alles selbst implementieren.

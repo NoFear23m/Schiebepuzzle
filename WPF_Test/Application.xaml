@@ -17,15 +17,12 @@
             <Style TargetType="Rectangle">
                 <Setter Property="Fill" Value="Black"/>
             </Style>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource MetroTextBlock}">
-                <Setter Property="FontSize" Value="20"/>
-            </Style>
-            <Style TargetType="ComboBox"  BasedOn="{StaticResource MetroComboBox}">
-                <Setter Property="MinHeight" Value="40"></Setter>
-                <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-            </Style>
+            
             <DataTemplate DataType="{x:Type viewModel:WinBoxVm}">
                 <local:uclWinBox/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AboutVm}">
+                <local:uclAbout/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

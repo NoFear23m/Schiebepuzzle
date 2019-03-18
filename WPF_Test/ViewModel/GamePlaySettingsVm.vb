@@ -1,4 +1,6 @@
-﻿Namespace ViewModel
+﻿Imports Schiebepuzzle.ViewModel.Infrastructure
+
+Namespace ViewModel
     Public Class GamePlaySettingsVm
         Inherits ViewModelBase
 
@@ -150,7 +152,6 @@
                 Dim sett = SettingsHelper.GetSettings
                 sett.PlaySounds = value
                 SettingsHelper.SaveSettings(sett)
-                'RaiseEvent SettingsChanged()
                 RaisePropertyChanged(SelectedImageFullPath)
             End Set
         End Property
@@ -161,7 +162,17 @@
         End Enum
 
 
-
+        Private _showInfoDialogCommand As ICommand
+        Public ReadOnly Property ShowInfoDialogCommand As ICommand
+            Get
+                If _showInfoDialogCommand Is Nothing Then _
+                    _showInfoDialogCommand = New RelayCommand(AddressOf ShowInfoDialogCommandExecute)
+                Return _showInfoDialogCommand
+            End Get
+        End Property
+        Private Sub ShowInfoDialogCommandExecute(ByVal obj As Object)
+            ServiceContainer.GetService(Of IDialogWindowService).ShowModalDialog("dialogBox", New AboutVm(), Me, True, False)
+        End Sub
 
     End Class
 End Namespace

@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="uclAbout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Schiebepuzzle"
+             xmlns:viewmodel="clr-namespace:Schiebepuzzle.ViewModel"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type viewmodel:AboutVm}}"
+             Height="450" Width="800">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="..\Puzzle.ico" Height="40" Grid.RowSpan="2"/>
+        <TextBlock FontSize="20" Grid.Column="1">
+            <Run Text="{Binding AppName,Mode=OneWay}" FontWeight="Bold"/>
+            <Run Text=" Version:"/>
+            <Run Text="{Binding Version,Mode=OneWay}" />
+        </TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="17">
+            <Run Text="{Binding AppDescription,Mode=OneWay}"/>
+        </TextBlock>
+
+        <TextBlock Text="Geladene Assemblys:" Grid.Row="3" Grid.ColumnSpan="2"/>
+        <ListView ItemsSource="{Binding AllAssemblys}" Grid.Row="4" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Description}"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Version}"/>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <TextBlock Grid.Row="6" Grid.ColumnSpan="2">
+            <Run Text="Copyright:"/>
+            <Run Text="{Binding Copyright,Mode=OneWay}"/>
+        </TextBlock>
+        <TextBlock Grid.Row="7" Grid.ColumnSpan="2">
+            <Run Text="Arbeitsordner:"/>
+            <Run Text="{Binding CurrentPath,Mode=OneWay}"/>
+        </TextBlock>
+
+        <DockPanel Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" Margin="5">
+            <Button Content="_Schliessen" IsCancel="True"/>
+        </DockPanel>
+    </Grid>
+</UserControl>
