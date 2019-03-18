@@ -29,8 +29,6 @@ Namespace ViewModel
 
                 AllButtons = New ObservableCollection(Of PlayStoneBase)
                 MixStonesCommand.Execute(Nothing)
-                'Status = New GameStatus() : Status.ResetGameTimer()
-                'Status.RefreshStatus(AllButtons.ToList)
             End If
         End Sub
 
@@ -129,6 +127,7 @@ Namespace ViewModel
 
 
         Private Sub MoveButtonCommand_Execute(obj As Object)
+            If Status.IsGameWon Then Exit Sub
             Dim currIndex = AllButtons.IndexOf(DirectCast(obj, PlayButton))
             Dim placeholder = AllButtons.Where(Function(x) x.StoneType = PlayStoneType.Placeholder).Single
             Dim emptyIndex = AllButtons.IndexOf(placeholder)
@@ -171,9 +170,9 @@ Namespace ViewModel
             Next
 
             If hasWin Then
+                Status.GameHasWin()
                 If withSound Then _soundCollector.PlaySound(SoundType.GameWin)
                 ServiceContainer.GetService(Of IMessageboxService).Show("Gratulation, du hast gewonnen!!!", "Gewonnen!", EnuMessageBoxButton.Ok, EnuMessageBoxImage.Information)
-                Status.PauseGameTimer()
             End If
         End Sub
 

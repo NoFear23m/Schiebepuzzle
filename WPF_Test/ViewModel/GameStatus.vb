@@ -8,7 +8,6 @@ Namespace ViewModel
         Private ReadOnly _runningTimer As Timer
 
         Public Sub New()
-
             If Not IsInDesignMode Then
                 _runningTimer = New Timer(1000)
                 AddHandler _runningTimer.Elapsed, AddressOf RunningTimer_Elapsed
@@ -32,6 +31,7 @@ Namespace ViewModel
         Friend Sub StartGameTimer()
             _runningTimer.Start()
             _gameTimerStatus = TimerStatus.Running
+            _IsGameWon = False
         End Sub
 
         Friend Sub PauseGameTimer()
@@ -43,6 +43,7 @@ Namespace ViewModel
             _runningTimer.Stop()
             RunningTime = New TimeSpan(0)
             _gameTimerStatus = TimerStatus.Resetted
+            _IsGameWon = False
         End Sub
 
         Private _gameTimerStatus As TimerStatus
@@ -121,6 +122,13 @@ Namespace ViewModel
                 RaisePropertyChanged()
             End Set
         End Property
+
+        Friend ReadOnly Property IsGameWon As Boolean = False
+
+        Public Sub GameHasWin()
+            _IsGameWon = True
+            PauseGameTimer()
+        End Sub
 
         Public Overrides Sub Dispose(disposing As Boolean)
             MyBase.Dispose(disposing)
