@@ -105,6 +105,29 @@ Namespace ViewModel
             End Set
         End Property
 
+        Public ReadOnly Property SelectedLevelMixComplexity As Integer
+            Get
+                Select Case SelectedLevel
+                    Case 0
+                        Return CInt(Math.Round(GetFieldStonesCount() * 0.3))
+                    Case 1
+                        Return CInt(Math.Round(GetFieldStonesCount() * 0.5))
+                    Case 2
+                        Return CInt(Math.Round(GetFieldStonesCount() * 0.6))
+                    Case 3
+                        Return CInt(Math.Round(GetFieldStonesCount() * 0.7))
+                    Case 4
+                        Return CInt(Math.Round(GetFieldStonesCount() * 0.8))
+                    Case Else
+                        Return CInt(Math.Round(GetFieldStonesCount() * 0.8))
+                End Select
+            End Get
+        End Property
+
+        Private Function GetFieldStonesCount() As Integer
+            Return (FieldSize * FieldSize) - 1
+        End Function
+
 
         Private _aviableImages As List(Of String)
 

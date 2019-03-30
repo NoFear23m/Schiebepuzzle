@@ -23,6 +23,7 @@ Namespace ViewModel
 
         Public Sub New(gameSetting As GamePlaySettingsVm)
             If Not IsInDesignMode Then
+                Status = New GameStatus
                 _soundCollector = New SoundCollector()
                 GameSettings = gameSetting
                 AddHandler GameSettings.SettingsChanged, AddressOf Settings_Changed
@@ -64,7 +65,7 @@ Namespace ViewModel
 
             If fieldType = GamePlaySettingsVm.PlayFieldType.ImagedPlayField Then
                 If Not IO.File.Exists(Environment.CurrentDirectory & "\images\" & GameSettings.SelectedImage) Then
-                    ServiceContainer.GetService(Of IMessageboxService).Show("Das Bild für das Spielsfeld wurde nicht gefunden. Lade Spieltyp 'Nummern'", "Bild nicht gefunden")
+                    ServiceContainer.GetService(Of IMessageboxService).Show("Das Bild für das Spielfeld wurde nicht gefunden. Lade Spieltyp 'Nummern'", "Bild nicht gefunden")
                     fieldType = GamePlaySettingsVm.PlayFieldType.NumberedPlayField
                 End If
             End If
@@ -196,18 +197,15 @@ Namespace ViewModel
             If GameSettings.PlaySounds Then _soundCollector.PlaySound(SoundType.MixStones)
             Dim r As New Random()
 
-            For i As Integer = 0 To (GameSettings.SelectedLevel + 3) * (5 * (GameSettings.SelectedLevel + 1))
-                Dim wasMoved As Boolean = False
-                Dim lastMovedIndex As Integer = -1
-                Do Until wasMoved
-                    Dim currButtonIndex = r.Next((GameSettings.Columns * GameSettings.Rows) - 1)
-                    Dim placeholderindex = AllButtons.IndexOf(AllButtons.Where(Function(x) x.StoneType = PlayStoneType.Placeholder).Single)
-                    If currButtonIndex <> lastMovedIndex AndAlso IsStoneNeerPlaceholder(currButtonIndex, placeholderindex) Then
-                        DoMoveButton(currButtonIndex, placeholderindex, False)
-                        wasMoved = True : lastMovedIndex = currButtonIndex
-                    End If
-                Loop
-            Next
+            Dim lastMovedIndex As Integer = -1
+            Do Until Status.WrongPositionedStones = GameSettings.SelectedLevelMixComplexity
+                Dim currButtonIndex = r.Next((GameSettings.Columns * GameSettings.Rows) - 1)
+                Dim placeholderindex = AllButtons.IndexOf(AllButtons.Where(Function(x) x.StoneType = PlayStoneType.Placeholder).Single)
+                If currButtonIndex <> lastMovedIndex AndAlso IsStoneNeerPlaceholder(currButtonIndex, placeholderindex) Then
+                    DoMoveButton(currButtonIndex, placeholderindex, False)
+                    lastMovedIndex = currButtonIndex
+                End If
+            Loop
 
             Status?.Dispose()
             Status = New GameStatus
