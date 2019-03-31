@@ -16,14 +16,12 @@ Namespace ViewModel
         Public Sub New()
             If Not IsInDesignMode Then
                 Throw New Exception("This Constructor is only for DesignTime-Support")
-            Else
-                Status = New GameStatus
             End If
         End Sub
 
         Public Sub New(gameSetting As GamePlaySettingsVm)
             If Not IsInDesignMode Then
-                Status = New GameStatus
+
                 _soundCollector = New SoundCollector()
                 GameSettings = gameSetting
                 AddHandler GameSettings.SettingsChanged, AddressOf Settings_Changed
@@ -62,6 +60,8 @@ Namespace ViewModel
 
         Friend Sub CreateField(fieldType As GamePlaySettingsVm.PlayFieldType)
             AllButtons.Clear()
+            If Status Is Nothing Then Status = New GameStatus
+            Status.RefreshStatus(AllButtons.ToList)
 
             If fieldType = GamePlaySettingsVm.PlayFieldType.ImagedPlayField Then
                 If Not IO.File.Exists(Environment.CurrentDirectory & "\images\" & GameSettings.SelectedImage) Then
